@@ -92,6 +92,7 @@ namespace SSE664Project3
                 {
                     
                     MessageBox.Show("Login successful");
+                    WelcomeUserText.Text = "Hi, " + username.Text + "!";
                     purchasebutton.Enabled = true;
 
                 }
