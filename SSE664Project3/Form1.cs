@@ -54,6 +54,7 @@ namespace SSE664Project3
         {
             InitializeComponent();
 
+            
                 using (SqlConnection sqlCon = new SqlConnection(getCorrectConnection()))
                 {
                     sqlCon.Open();
