@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Text.RegularExpressions;
 
 namespace SSE664Project3
 {
@@ -153,6 +154,17 @@ namespace SSE664Project3
             string createdUsername = username.Text;
             string createdPassword = password.Text;
 
+            if (createdUsername == "" || createdPassword == "")
+            {
+                MessageBox.Show("One of the fields is empty.");
+                return;
+            }
+            else if (!isValidPassword(createdPassword))
+            {
+                MessageBox.Show("Password must be at least 8 characters.");
+                return;
+            }
+
             try
             {
                 using (SqlConnection sqlcon = new SqlConnection(getCorrectConnection()))
@@ -166,7 +178,8 @@ namespace SSE664Project3
                     MessageBox.Show("Login credentials added: " + createdUsername + " " + createdPassword);
                 }
 
-
+                username.Text = "";
+                password.Text = "";
 
             }
             catch
@@ -175,5 +188,23 @@ namespace SSE664Project3
             }
 
         }
+
+        /// <summary>
+        /// Whether or not the given password is usable.
+        /// Passwords must contain a number and be at least 8 characters.
+        /// </summary>
+        /// <param name="password">The password to validate.</param>
+        /// <returns>True if the password is valid.</returns>
+        private bool isValidPassword(String password)
+        {
+            // Contains at least one number
+            if (!Regex.IsMatch(password, @"\d"))
+            {
+                return false;
+            }
+            // Required length of at least 8
+            return password.Length >= 8;
+        }
+
     }
 }
