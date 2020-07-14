@@ -13,17 +13,26 @@ namespace SSE664Project3
 {
     public partial class Form1 : Form
     {
+        /// <summary>
+        ///  The connection to use for the database. 
+        /// </summary>
+        private String connection;
 
         public String getCorrectConnection()
         {
+            if (connection != null)
+            {
+                return connection;
+            }
             string GeraldsConnection = @"Data Source=localhost;Initial Catalog=SSEProject3;Integrated Security=True;Pooling=False; Connect Timeout = 2";
-            string BradysConnection = @"Data Source=localhost;Initial Catalog=SSEProject3;Integrated Security=True;Pooling=False; Connect Timeout = 2";
+            string BradysConnection = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\10974408\Documents\sse664p3.mdf;Integrated Security=True;Connect Timeout=2";
 
             try
             {
                 using (SqlConnection sqlCon = new SqlConnection(GeraldsConnection))
                 {
                     sqlCon.Open();
+                    connection = GeraldsConnection;
                     usingserverlabel.Text = "Using Alfred's Database";
                     return GeraldsConnection;
                 }
@@ -33,6 +42,7 @@ namespace SSE664Project3
                 using (SqlConnection sqlCon = new SqlConnection(BradysConnection))
                 {
                     sqlCon.Open();
+                    connection = BradysConnection;
                     usingserverlabel.Text = "Using Brady's Database";
                     return BradysConnection;
                 }
