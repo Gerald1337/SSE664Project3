@@ -147,5 +147,33 @@ namespace SSE664Project3
                 StoreContentsViewer.DataSource = dbtl;
             }
         }
+
+        private void createUserButton_Click(object sender, EventArgs e)
+        {
+            string createdUsername = username.Text;
+            string createdPassword = password.Text;
+
+            try
+            {
+                using (SqlConnection sqlcon = new SqlConnection(getCorrectConnection()))
+                {
+                    sqlcon.Open();
+                    string query = "INSERT INTO LoginInfo (username, password) VALUES ('" + createdUsername + "', '" + createdPassword + "')";
+                    SqlDataAdapter sda = new SqlDataAdapter(query, sqlcon);
+                    DataTable dbtl = new DataTable();
+                    sda.Fill(dbtl);
+
+                    MessageBox.Show("Login credentials added: " + createdUsername + " " + createdPassword);
+                }
+
+
+
+            }
+            catch
+            {
+                MessageBox.Show("FATAL ERROR! Something went wrong. Try again");
+            }
+
+        }
     }
 }

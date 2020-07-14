@@ -40,6 +40,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.searchbox = new System.Windows.Forms.TextBox();
             this.searchButton = new System.Windows.Forms.Button();
+            this.createUserButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.StoreContentsViewer)).BeginInit();
             this.SuspendLayout();
             // 
@@ -152,11 +153,22 @@
             this.searchButton.UseVisualStyleBackColor = true;
             this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
             // 
+            // createUserButton
+            // 
+            this.createUserButton.Location = new System.Drawing.Point(525, 204);
+            this.createUserButton.Name = "createUserButton";
+            this.createUserButton.Size = new System.Drawing.Size(75, 23);
+            this.createUserButton.TabIndex = 12;
+            this.createUserButton.Text = "Create User";
+            this.createUserButton.UseVisualStyleBackColor = true;
+            this.createUserButton.Click += new System.EventHandler(this.createUserButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(678, 450);
+            this.Controls.Add(this.createUserButton);
             this.Controls.Add(this.searchButton);
             this.Controls.Add(this.searchbox);
             this.Controls.Add(this.label1);
@@ -192,6 +204,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox searchbox;
         private System.Windows.Forms.Button searchButton;
+        private System.Windows.Forms.Button createUserButton;
     }
 }
 
