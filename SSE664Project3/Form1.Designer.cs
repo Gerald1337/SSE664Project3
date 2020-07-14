@@ -46,80 +46,103 @@
             // 
             // StoreContentsViewer
             // 
+            this.StoreContentsViewer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.StoreContentsViewer.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.StoreContentsViewer.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.StoreContentsViewer.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.StoreContentsViewer.Location = new System.Drawing.Point(12, 64);
+            this.StoreContentsViewer.Location = new System.Drawing.Point(22, 118);
+            this.StoreContentsViewer.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.StoreContentsViewer.Name = "StoreContentsViewer";
-            this.StoreContentsViewer.Size = new System.Drawing.Size(458, 374);
+            this.StoreContentsViewer.RowHeadersWidth = 72;
+            this.StoreContentsViewer.Size = new System.Drawing.Size(840, 690);
             this.StoreContentsViewer.TabIndex = 0;
             this.StoreContentsViewer.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // WelcomeUserText
             // 
+            this.WelcomeUserText.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.WelcomeUserText.AutoSize = true;
-            this.WelcomeUserText.Location = new System.Drawing.Point(524, 16);
+            this.WelcomeUserText.Location = new System.Drawing.Point(961, 30);
+            this.WelcomeUserText.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.WelcomeUserText.Name = "WelcomeUserText";
-            this.WelcomeUserText.Size = new System.Drawing.Size(86, 13);
+            this.WelcomeUserText.Size = new System.Drawing.Size(157, 25);
             this.WelcomeUserText.TabIndex = 1;
             this.WelcomeUserText.Text = "Welcome, Guest";
             this.WelcomeUserText.Click += new System.EventHandler(this.WelcomeUserText_Click);
             // 
             // username
             // 
-            this.username.Location = new System.Drawing.Point(525, 64);
+            this.username.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.username.Location = new System.Drawing.Point(963, 118);
+            this.username.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.username.Name = "username";
-            this.username.Size = new System.Drawing.Size(100, 20);
+            this.username.Size = new System.Drawing.Size(180, 29);
             this.username.TabIndex = 2;
             // 
             // password
             // 
-            this.password.Location = new System.Drawing.Point(525, 124);
+            this.password.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.password.Location = new System.Drawing.Point(963, 229);
+            this.password.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.password.Name = "password";
-            this.password.Size = new System.Drawing.Size(100, 20);
+            this.password.Size = new System.Drawing.Size(180, 29);
             this.password.TabIndex = 3;
             // 
             // usernametext
             // 
+            this.usernametext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.usernametext.AutoSize = true;
-            this.usernametext.Location = new System.Drawing.Point(524, 48);
+            this.usernametext.Location = new System.Drawing.Point(961, 89);
+            this.usernametext.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.usernametext.Name = "usernametext";
-            this.usernametext.Size = new System.Drawing.Size(55, 13);
+            this.usernametext.Size = new System.Drawing.Size(102, 25);
             this.usernametext.TabIndex = 4;
             this.usernametext.Text = "Username";
             // 
             // passwordtext
             // 
+            this.passwordtext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.passwordtext.AutoSize = true;
-            this.passwordtext.Location = new System.Drawing.Point(522, 108);
+            this.passwordtext.Location = new System.Drawing.Point(957, 199);
+            this.passwordtext.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.passwordtext.Name = "passwordtext";
-            this.passwordtext.Size = new System.Drawing.Size(53, 13);
+            this.passwordtext.Size = new System.Drawing.Size(98, 25);
             this.passwordtext.TabIndex = 5;
             this.passwordtext.Text = "Password";
             // 
             // purchasebutton
             // 
+            this.purchasebutton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.purchasebutton.Enabled = false;
-            this.purchasebutton.Location = new System.Drawing.Point(497, 403);
+            this.purchasebutton.Location = new System.Drawing.Point(911, 744);
+            this.purchasebutton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.purchasebutton.Name = "purchasebutton";
-            this.purchasebutton.Size = new System.Drawing.Size(75, 23);
+            this.purchasebutton.Size = new System.Drawing.Size(138, 42);
             this.purchasebutton.TabIndex = 6;
             this.purchasebutton.Text = "Purchase";
             this.purchasebutton.UseVisualStyleBackColor = true;
             // 
             // usingserverlabel
             // 
+            this.usingserverlabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.usingserverlabel.AutoSize = true;
-            this.usingserverlabel.Location = new System.Drawing.Point(494, 429);
+            this.usingserverlabel.Location = new System.Drawing.Point(906, 792);
+            this.usingserverlabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.usingserverlabel.Name = "usingserverlabel";
-            this.usingserverlabel.Size = new System.Drawing.Size(37, 13);
+            this.usingserverlabel.Size = new System.Drawing.Size(68, 25);
             this.usingserverlabel.TabIndex = 7;
             this.usingserverlabel.Text = "Using:";
             this.usingserverlabel.Click += new System.EventHandler(this.label1_Click);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(525, 161);
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.Location = new System.Drawing.Point(963, 297);
+            this.button1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(138, 42);
             this.button1.TabIndex = 8;
             this.button1.Text = "Login";
             this.button1.UseVisualStyleBackColor = true;
@@ -128,26 +151,29 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(56, 25);
+            this.label1.Location = new System.Drawing.Point(103, 46);
+            this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(41, 13);
+            this.label1.Size = new System.Drawing.Size(75, 25);
             this.label1.TabIndex = 9;
             this.label1.Text = "Search";
             this.label1.Click += new System.EventHandler(this.label1_Click_1);
             // 
             // searchbox
             // 
-            this.searchbox.Location = new System.Drawing.Point(59, 41);
+            this.searchbox.Location = new System.Drawing.Point(108, 76);
+            this.searchbox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.searchbox.Name = "searchbox";
-            this.searchbox.Size = new System.Drawing.Size(222, 20);
+            this.searchbox.Size = new System.Drawing.Size(404, 29);
             this.searchbox.TabIndex = 10;
             this.searchbox.TextChanged += new System.EventHandler(this.searchbox_TextChanged);
             // 
             // searchButton
             // 
-            this.searchButton.Location = new System.Drawing.Point(299, 38);
+            this.searchButton.Location = new System.Drawing.Point(548, 70);
+            this.searchButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.searchButton.Name = "searchButton";
-            this.searchButton.Size = new System.Drawing.Size(75, 23);
+            this.searchButton.Size = new System.Drawing.Size(138, 42);
             this.searchButton.TabIndex = 11;
             this.searchButton.Text = "search";
             this.searchButton.UseVisualStyleBackColor = true;
@@ -155,9 +181,11 @@
             // 
             // createUserButton
             // 
-            this.createUserButton.Location = new System.Drawing.Point(525, 204);
+            this.createUserButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.createUserButton.Location = new System.Drawing.Point(963, 377);
+            this.createUserButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.createUserButton.Name = "createUserButton";
-            this.createUserButton.Size = new System.Drawing.Size(75, 23);
+            this.createUserButton.Size = new System.Drawing.Size(138, 42);
             this.createUserButton.TabIndex = 12;
             this.createUserButton.Text = "Create User";
             this.createUserButton.UseVisualStyleBackColor = true;
@@ -165,9 +193,9 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(678, 450);
+            this.ClientSize = new System.Drawing.Size(1243, 831);
             this.Controls.Add(this.createUserButton);
             this.Controls.Add(this.searchButton);
             this.Controls.Add(this.searchbox);
@@ -181,6 +209,8 @@
             this.Controls.Add(this.username);
             this.Controls.Add(this.WelcomeUserText);
             this.Controls.Add(this.StoreContentsViewer);
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.MinimumSize = new System.Drawing.Size(1200, 800);
             this.Name = "Form1";
             this.Text = "Amazon";
             this.Load += new System.EventHandler(this.Form1_Load);
