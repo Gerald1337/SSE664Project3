@@ -88,10 +88,11 @@ namespace SSE664Project3
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Login_Click(object sender, EventArgs e)
         {
             try
             {
+                // TODO: Hash user password
                 SqlConnection sqlcon = new SqlConnection(getCorrectConnection());
                 string query = "Select * from LoginInfo Where username = '" + username.Text + "' and password = '" + password.Text + "'";
                 SqlDataAdapter sda = new SqlDataAdapter(query, sqlcon); 
