@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Text.RegularExpressions;
@@ -25,8 +19,8 @@ namespace SSE664Project3
             {
                 return connection;
             }
-            string GeraldsConnection = @"Data Source=localhost;Initial Catalog=SSEProject3;Integrated Security=True;Pooling=False; Connect Timeout = 2";
-            string BradysConnection = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\10974408\Documents\sse664p3.mdf;Integrated Security=True;Connect Timeout=2";
+            string GeraldsConnection = @"Data Source=localhost;Initial Catalog=SSEProject3;Integrated Security=True;Pooling=False; Connect Timeout = 1";
+            string BradysConnection = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\10974408\Documents\sse664p3.mdf;Integrated Security=True;Connect Timeout=1";
 
             try
             {
@@ -141,7 +135,7 @@ namespace SSE664Project3
             {
 
                 sqlCon.Open();
-                SqlDataAdapter sqlData = new SqlDataAdapter("SELECT * FROM Inventory WHERE ProductName LIKE '" + searchQuery + "%'", sqlCon);
+                SqlDataAdapter sqlData = new SqlDataAdapter("SELECT * FROM Inventory WHERE ProductName LIKE '%" + searchQuery + "%'", sqlCon);
                 DataTable dbtl = new DataTable();
                 sqlData.Fill(dbtl);
 
@@ -159,9 +153,10 @@ namespace SSE664Project3
                 MessageBox.Show("One of the fields is empty.");
                 return;
             }
-            else if (!isValidPassword(createdPassword))
+            //else if (!isValidPassword(createdPassword))
+            else if (!PasswordVerifier.IsValidPassword(createdPassword))
             {
-                MessageBox.Show("Password must be at least 8 characters.");
+                MessageBox.Show("Password must be at least 8 characters and contain at least one number.");
                 return;
             }
 
@@ -187,23 +182,6 @@ namespace SSE664Project3
                 MessageBox.Show("FATAL ERROR! Something went wrong. Try again");
             }
 
-        }
-
-        /// <summary>
-        /// Whether or not the given password is usable.
-        /// Passwords must contain a number and be at least 8 characters.
-        /// </summary>
-        /// <param name="password">The password to validate.</param>
-        /// <returns>True if the password is valid.</returns>
-        private bool isValidPassword(String password)
-        {
-            // Contains at least one number
-            if (!Regex.IsMatch(password, @"\d"))
-            {
-                return false;
-            }
-            // Required length of at least 8
-            return password.Length >= 8;
         }
 
     }
