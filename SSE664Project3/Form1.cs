@@ -3,6 +3,7 @@ using System.Data;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Text.RegularExpressions;
+using System.Runtime.InteropServices;
 
 namespace SSE664Project3
 {
@@ -88,26 +89,33 @@ namespace SSE664Project3
         {
             try
             {
-                // TODO: Hash user password
                 SqlConnection sqlcon = new SqlConnection(getCorrectConnection());
-                string query = "Select * from LoginInfo Where username = '" + username.Text + "' and password = '" + password.Text + "'";
-                SqlDataAdapter sda = new SqlDataAdapter(query, sqlcon); 
-                DataTable dtb1 = new DataTable();
-                sda.Fill(dtb1);
 
-                if (dtb1.Rows.Count >= 1)
+                // Find a user with the same username
+                String matchingUserQuery = $"SELECT * FROM LoginInfo WHERE username = '{username.Text}'";
+                SqlDataAdapter sda = new SqlDataAdapter(matchingUserQuery, sqlcon);
+                DataTable matchingUserTable = new DataTable();
+                sda.Fill(matchingUserTable);
+                if (matchingUserTable.Rows.Count == 1)
                 {
-                    
-                    MessageBox.Show("Login successful");
-                    WelcomeUserText.Text = "Hi, " + username.Text + "!";
-                    purchasebutton.Enabled = true;
-
+                    // User exists; compare passwords
+                    var row = matchingUserTable.Rows[0];
+                    var hashedPassword = row["password"].ToString();
+                    if (BCrypt.CheckPassword(password.Text, hashedPassword))
+                    {
+                        MessageBox.Show("Login successful");
+                        WelcomeUserText.Text = "Hi, " + username.Text + "!";
+                        purchasebutton.Enabled = true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Incorrect login info, please try again");
+                    }
                 }
                 else
                 {
                     MessageBox.Show("Incorrect login info, please try again");
                 }
-
             }
             catch
             {
@@ -148,29 +156,55 @@ namespace SSE664Project3
             string createdUsername = username.Text;
             string createdPassword = password.Text;
 
+            // Check if the username already exists
+            try
+            {
+                SqlConnection sqlcon = new SqlConnection(getCorrectConnection());
+                String matchingUserQuery = $"SELECT * FROM LoginInfo WHERE username = '{username.Text}'";
+                SqlDataAdapter sda = new SqlDataAdapter(matchingUserQuery, sqlcon);
+                DataTable matchingUserTable = new DataTable();
+                sda.Fill(matchingUserTable);
+                if (matchingUserTable.Rows.Count != 0)
+                {
+                    // Username already exists; exit
+                    MessageBox.Show("That username already exists.");
+                    return;
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Something went wrong.");
+                return;
+            }
+
             if (createdUsername == "" || createdPassword == "")
             {
+                // Not enough data; exit
                 MessageBox.Show("One of the fields is empty.");
                 return;
             }
             //else if (!isValidPassword(createdPassword))
             else if (!PasswordVerifier.IsValidPassword(createdPassword))
             {
+                // Invalid password; exit
                 MessageBox.Show("Password must be at least 8 characters and contain at least one number.");
                 return;
             }
+
+            // Hash the password for storage
+            String hashedPassword = BCrypt.HashPassword(createdPassword, BCrypt.GenerateSalt());
 
             try
             {
                 using (SqlConnection sqlcon = new SqlConnection(getCorrectConnection()))
                 {
                     sqlcon.Open();
-                    string query = "INSERT INTO LoginInfo (username, password) VALUES ('" + createdUsername + "', '" + createdPassword + "')";
+                    string query = "INSERT INTO LoginInfo (username, password) VALUES ('" + createdUsername + "', '" + hashedPassword + "')";
                     SqlDataAdapter sda = new SqlDataAdapter(query, sqlcon);
                     DataTable dbtl = new DataTable();
                     sda.Fill(dbtl);
 
-                    MessageBox.Show("Login credentials added: " + createdUsername + " " + createdPassword);
+                    MessageBox.Show("Login credentials added: " + createdUsername + " " + hashedPassword);
                 }
 
                 username.Text = "";
