@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Text.RegularExpressions;
 using System.Runtime.InteropServices;
+using System.CodeDom;
 
 namespace SSE664Project3
 {
@@ -14,7 +15,9 @@ namespace SSE664Project3
         /// </summary>
         private String connection;
 
-
+        /// <summary>
+        /// The manaaging class that handles SQL operations.
+        /// </summary>
         private DataManager dataManager = new DataManager();
 
         public String getCorrectConnection()
@@ -53,19 +56,8 @@ namespace SSE664Project3
         {
             InitializeComponent();
 
-            
-                using (SqlConnection sqlCon = new SqlConnection(getCorrectConnection()))
-                {
-                    sqlCon.Open();
-                    SqlDataAdapter sqlData = new SqlDataAdapter("SELECT * FROM Inventory", sqlCon);
-                    DataTable dbtl = new DataTable();
-                    sqlData.Fill(dbtl);
-
-                    StoreContentsViewer.DataSource = dbtl;
-                }
-            
-
-
+            StoreContentsViewer.DataSource = dataManager.Execute("SELECT * FROM Inventory");
+            usingserverlabel.Text = $"Connected to {dataManager.databaseName}'s database.";
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -92,13 +84,9 @@ namespace SSE664Project3
         {
             try
             {
-                SqlConnection sqlcon = new SqlConnection(getCorrectConnection());
+                var matchingUserTable = dataManager
+                    .Execute($"SELECT * FROM LoginInfo WHERE username = '{username.Text}'");
 
-                // Find a user with the same username
-                String matchingUserQuery = $"SELECT * FROM LoginInfo WHERE username = '{username.Text}'";
-                SqlDataAdapter sda = new SqlDataAdapter(matchingUserQuery, sqlcon);
-                DataTable matchingUserTable = new DataTable();
-                sda.Fill(matchingUserTable);
                 if (matchingUserTable.Rows.Count == 1)
                 {
                     // User exists; compare passwords
@@ -122,7 +110,7 @@ namespace SSE664Project3
             }
             catch
             {
-                MessageBox.Show("FATAL ERROR! Something went wrong. Try again");
+                MessageBox.Show("Fatal Error: Something went wrong. Try again");
             }
 
 
@@ -141,16 +129,18 @@ namespace SSE664Project3
         private void searchButton_Click(object sender, EventArgs e) //When search button is pressed
         {
             //Basic search query
-            string searchQuery = searchbox.Text;
-            using (SqlConnection sqlCon = new SqlConnection(getCorrectConnection()))
-            { 
-
-                sqlCon.Open();
-                SqlDataAdapter sqlData = new SqlDataAdapter("SELECT * FROM Inventory WHERE ProductName LIKE '%" + searchQuery + "%'", sqlCon);
-                DataTable dbtl = new DataTable();
-                sqlData.Fill(dbtl);
-
-                StoreContentsViewer.DataSource = dbtl;
+            try
+            {
+                String searchText = searchbox.Text;
+                String searchQuery = "SELECT * FROM Inventory WHERE ProductName LIKE '%" + searchText + "%'";
+                var table = dataManager.Execute(searchQuery);
+                Console.WriteLine($"Number of rows: {table.Rows.Count}");
+                StoreContentsViewer.DataSource = dataManager.Execute(searchQuery);
+            }
+            catch (InvalidOperationException exception)
+            {
+                Console.WriteLine(exception.Message);
+                MessageBox.Show("Something went wrong. Please try again later.");
             }
         }
 
@@ -162,31 +152,28 @@ namespace SSE664Project3
             // Check if the username already exists
             try
             {
-                SqlConnection sqlcon = new SqlConnection(getCorrectConnection());
-                String matchingUserQuery = $"SELECT * FROM LoginInfo WHERE username = '{username.Text}'";
-                SqlDataAdapter sda = new SqlDataAdapter(matchingUserQuery, sqlcon);
-                DataTable matchingUserTable = new DataTable();
-                sda.Fill(matchingUserTable);
+                var matchingUserTable = dataManager
+                    .Execute($"SELECT * FROM LoginInfo WHERE username = '{username.Text}'");
                 if (matchingUserTable.Rows.Count != 0)
                 {
-                    // Username already exists; exit
                     MessageBox.Show("That username already exists.");
                     return;
                 }
             }
-            catch
+            catch(InvalidOperationException exception)
             {
+                Console.WriteLine(exception.Message);
                 MessageBox.Show("Something went wrong.");
                 return;
             }
-
+            
+            // Validate username and password
             if (createdUsername == "" || createdPassword == "")
             {
                 // Not enough data; exit
                 MessageBox.Show("One of the fields is empty.");
                 return;
             }
-            //else if (!isValidPassword(createdPassword))
             else if (!PasswordVerifier.IsValidPassword(createdPassword))
             {
                 // Invalid password; exit
@@ -197,28 +184,22 @@ namespace SSE664Project3
             // Hash the password for storage
             String hashedPassword = BCrypt.HashPassword(createdPassword, BCrypt.GenerateSalt());
 
+            // Add user to database
             try
             {
-                using (SqlConnection sqlcon = new SqlConnection(getCorrectConnection()))
-                {
-                    sqlcon.Open();
-                    string query = "INSERT INTO LoginInfo (username, password) VALUES ('" + createdUsername + "', '" + hashedPassword + "')";
-                    SqlDataAdapter sda = new SqlDataAdapter(query, sqlcon);
-                    DataTable dbtl = new DataTable();
-                    sda.Fill(dbtl);
-
-                    MessageBox.Show("Login credentials added: " + createdUsername + " " + hashedPassword);
-                }
+                String query = "INSERT INTO LoginInfo (username, password) " +
+                    "VALUES ('" + createdUsername + "', '" + hashedPassword + "')";
+                dataManager.Execute(query);
+                MessageBox.Show("Login credentials added:\n" + createdUsername + "\n" + hashedPassword);
 
                 username.Text = "";
                 password.Text = "";
-
             }
-            catch
+            catch (InvalidOperationException exception)
             {
-                MessageBox.Show("FATAL ERROR! Something went wrong. Try again");
+                Console.WriteLine(exception.Message);
+                MessageBox.Show("Fatal Error: Something went wrong. Try again");
             }
-
         }
 
     }

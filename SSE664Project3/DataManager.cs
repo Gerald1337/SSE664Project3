@@ -20,7 +20,13 @@ namespace SSE664Project3
         /// <summary>
         /// The connection to  the SQL database.
         /// </summary>
-        SqlConnection SQLConnection;
+        private SqlConnection connection;
+
+
+        /// <summary>
+        ///  The name of the database to which the program is connected.
+        /// </summary>
+        public String databaseName;
 
 
         public DataManager()
@@ -34,6 +40,7 @@ namespace SSE664Project3
         /// First attempts to connect to Gerald's database, 
         /// then Brady's if the first attempt fails.
         /// </summary>
+        /// 
         /// <returns>
         /// The connection string that should be used for database connections.
         /// </returns>
@@ -48,21 +55,19 @@ namespace SSE664Project3
 
             try
             {
-                using (SqlConnection sqlCon = new SqlConnection(GeraldsConnection))
-                {
-                    sqlCon.Open();
-                    connectionString = GeraldsConnection;
-                    return GeraldsConnection;
-                }
+                connection = new SqlConnection(GeraldsConnection);
+                connection.Open();
+                connectionString = GeraldsConnection;
+                databaseName = "Gerald";
+                return GeraldsConnection;
             }
             catch
             {
-                using (SqlConnection sqlCon = new SqlConnection(BradysConnection))
-                {
-                    sqlCon.Open();
-                    connectionString = BradysConnection;
-                    return BradysConnection;
-                }
+                connection = new SqlConnection(BradysConnection);
+                connection.Open();
+                connectionString = BradysConnection;
+                databaseName = "Brady";
+                return BradysConnection;
             }
 
         }
@@ -75,10 +80,9 @@ namespace SSE664Project3
         /// <returns>
         /// The table generated as a result of executing the given query.
         /// </returns>
-        DataTable Execute(String query)
+        public DataTable Execute(String query)
         {
-            SQLConnection.Open();
-            SqlDataAdapter sqlData = new SqlDataAdapter(query, SQLConnection);
+            SqlDataAdapter sqlData = new SqlDataAdapter(query, connection);
             DataTable table = new DataTable();
             sqlData.Fill(table);
             return table;
