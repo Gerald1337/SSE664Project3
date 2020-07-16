@@ -14,6 +14,9 @@ namespace SSE664Project3
         /// </summary>
         private String connection;
 
+
+        private DataManager dataManager = new DataManager();
+
         public String getCorrectConnection()
         {
             if (connection != null)
@@ -140,7 +143,7 @@ namespace SSE664Project3
             //Basic search query
             string searchQuery = searchbox.Text;
             using (SqlConnection sqlCon = new SqlConnection(getCorrectConnection()))
-            {
+            { 
 
                 sqlCon.Open();
                 SqlDataAdapter sqlData = new SqlDataAdapter("SELECT * FROM Inventory WHERE ProductName LIKE '%" + searchQuery + "%'", sqlCon);
